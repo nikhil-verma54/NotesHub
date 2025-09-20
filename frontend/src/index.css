@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@tailwind utilities;
+html {
+  @apply transition-colors duration-300;
+}
+
+body {
+  @apply bg-white text-gray-900;
+}
+
+html.dark body {
+  @apply bg-gray-900 text-gray-100;
+}
