@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true); // toggle login/signup
@@ -87,6 +88,45 @@ export default function Auth() {
             {isLogin ? "Login" : "Sign Up"}
           </button>
         </form>
+
+        {/* Divider */}
+        <div className="flex items-center my-4">
+          <div className="flex-grow border-t border-gray-200"></div>
+          <span className="px-3 text-sm text-gray-500">or</span>
+          <div className="flex-grow border-t border-gray-200"></div>
+        </div>
+
+        {/* Google Login */}
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const id_token = credentialResponse.credential;
+                if (!id_token) throw new Error("No credential returned by Google");
+
+                const { data } = await axios.post(
+                  "http://127.0.0.1:8000/auth/google/",
+                  { id_token },
+                  { headers: { "Content-Type": "application/json" } }
+                );
+
+                localStorage.setItem("access_token", data.access);
+                localStorage.setItem("refresh_token", data.refresh);
+                axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+                window.location.href = "/Dashboard";
+              } catch (err) {
+                console.error(err);
+                alert(
+                  err.response?.data?.error ||
+                    "Google sign-in failed. Please try again."
+                );
+              }
+            }}
+            onError={() => {
+              alert("Google sign-in failed. Please try again.");
+            }}
+          />
+        </div>
 
         <p className="text-center mt-4 text-sm text-gray-600">
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}

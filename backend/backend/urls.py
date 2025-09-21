@@ -29,6 +29,7 @@ urlpatterns = [
           jwt_views.TokenRefreshView.as_view(), 
           name ='token_refresh'),
     path('auth/', include('authentication.urls')),
+    path('api-auth/', include('drf_social_oauth2.urls',namespace='drf')),
     path('notes/', include('notesupload.urls')),  # ✅ add this
 ] 
 if settings.DEBUG:
