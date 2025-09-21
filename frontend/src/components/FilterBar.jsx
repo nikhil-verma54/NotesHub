@@ -78,7 +78,7 @@ export default function FilterBar() {
         setSubjects([]);
       }
     };
-    fetchSubjects();
+    fetchSubjects(); 
   }, [course, branch, semester]);
 
   return (
