@@ -4,6 +4,9 @@ from .models import Note
 from .serializers import NoteSerializer
 from django.core.files.base import ContentFile
 from django.db import models
+from rest_framework.views import APIView
+from django.http import FileResponse, Http404
+import os
 
 class NoteUploadView(generics.CreateAPIView):
     queryset = Note.objects.all()
@@ -110,3 +113,26 @@ class SubjectsListView(generics.ListAPIView):
               .distinct()
         )
         return Response(list(subjects))
+
+
+class NoteDownloadView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, pk: int):
+        try:
+            note = Note.objects.get(pk=pk)
+        except Note.DoesNotExist:
+            raise Http404
+
+        # Allow download if approved or the owner is requesting
+        if not note.is_approved:
+            if not (request.user and request.user.is_authenticated and request.user == note.by):
+                raise Http404
+
+        if not note.notes_file:
+            raise Http404
+
+        file_handle = note.notes_file.open('rb')
+        filename = os.path.basename(note.notes_file.name)
+        response = FileResponse(file_handle, as_attachment=True, filename=filename)
+        return response

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import NoteUploadView, NoteListView, NoteUserListView, NoteDeleteView, SubjectsListView
+from .views import NoteUploadView, NoteListView, NoteUserListView, NoteDeleteView, SubjectsListView, NoteDownloadView
 
 urlpatterns = [
     path('upload/', NoteUploadView.as_view(), name='note-upload'),
@@ -7,5 +7,6 @@ urlpatterns = [
     path('my-notes/', NoteUserListView.as_view(), name='note-user-list'),
     path('delete/<int:pk>/', NoteDeleteView.as_view(), name='note-delete'),
     path('subjects/', SubjectsListView.as_view(), name='subjects-list'),
+    path('download/<int:pk>/', NoteDownloadView.as_view(), name='note-download'),
       
 ]

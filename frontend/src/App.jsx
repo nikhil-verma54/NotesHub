@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import UploadNotes from './pages/UploadNotes';
 import MyNotes from './pages/MyNotes';
 import About from './pages/About';
+import Chatbot from './pages/Chatbot';
 function App() {
     return (
       <>
@@ -21,6 +22,7 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard/>}/>
           <Route path="/UploadNotes" element={<UploadNotes/>}/>
           <Route path="/MyNotes" element={<MyNotes/>}/>
+          <Route path="/Chatbot" element={<Chatbot/>}/>
         </Routes>
       </>);
 }

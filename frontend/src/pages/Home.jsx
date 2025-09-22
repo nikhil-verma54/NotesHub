@@ -9,6 +9,7 @@ export default function Home() {
   const [notes, setNotes] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const isLoggedIn = Boolean(localStorage.getItem("access_token"));
 
   const queryParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const apiParams = useMemo(() => {
@@ -44,6 +45,7 @@ export default function Home() {
         <NotesGrid
           notes={notes}
           onView={(id) => window.location.href = `/notes/${id}`}
+          isLoggedIn={isLoggedIn}
         />
       ) : (
         <div className="py-12 text-center text-gray-600">

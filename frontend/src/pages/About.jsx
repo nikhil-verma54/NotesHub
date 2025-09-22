@@ -1,23 +1,25 @@
-// About.jsx
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaGlobe } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaGlobe, FaEnvelope, FaWhatsapp } from "react-icons/fa";
+import nikhil from "../assets/bhaishab.jpg";
 
 export default function About() {
   const projects = [
     {
-      year: "2023",
       title: "Placement Tracking System",
       description:
         "A full-stack platform for managing student placements efficiently with dashboards and analytics.",
     },
     {
-      year: "2024",
       title: "E-Commerce Website",
       description:
         "Developed a feature-rich eCommerce site with product filters, cart system, and an admin panel.",
     },
     {
-      year: "2025",
       title: "NotesHub",
+      description:
+        "Django + React based platform for uploading, approving, and sharing notes seamlessly.",
+    },
+    {
+      title: "Nattrinai",
       description:
         "Django + React based platform for uploading, approving, and sharing notes seamlessly.",
     },
@@ -28,31 +30,35 @@ export default function About() {
       {/* Header Section */}
       <div className="text-center">
         <img
-          src="https://via.placeholder.com/200"
+          src={nikhil}
           alt="Profile"
           className="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto shadow-2xl border-4 border-white"
         />
         <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mt-6">Nikhil Verma</h1>
         <p className="text-lg md:text-xl text-gray-600 mt-3">
-          📚 Student @ Your College Name
+          📚 Student @ Prestige Institute of Management and Research, Bhopal  <br />
+          Bachelor of Technology in Computer Science & Engineering
         </p>
 
         {/* Social Links */}
         <div className="flex justify-center gap-6 mt-6 text-2xl md:text-3xl text-gray-700">
-          <a href="https://github.com/" target="_blank" rel="noreferrer" className="hover:text-black">
+          <a href="https://github.com/nikhil-verma54" target="_blank" rel="noreferrer" className="hover:text-black">
             <FaGithub />
           </a>
-          <a href="https://linkedin.com/" target="_blank" rel="noreferrer" className="hover:text-blue-600">
+          <a href="https://www.linkedin.com/in/nikhil-verma-a96b302b7" target="_blank" rel="noreferrer" className="hover:text-blue-600">
             <FaLinkedin />
           </a>
-          <a href="https://twitter.com/" target="_blank" rel="noreferrer" className="hover:text-blue-400">
+          <a href="https://x.com/Nikk_cr?t=FVQXwbO8haTUR-GDVuokUw&s=09" target="_blank" rel="noreferrer" className="hover:text-blue-400">
             <FaTwitter />
           </a>
-          <a href="https://instagram.com/" target="_blank" rel="noreferrer" className="hover:text-pink-500">
+          <a href="https://www.instagram.com/nikhil.crz/" target="_blank" rel="noreferrer" className="hover:text-pink-500">
             <FaInstagram />
           </a>
-          <a href="https://your-portfolio.com" target="_blank" rel="noreferrer" className="hover:text-green-600">
-            <FaGlobe />
+          <a href="mailto:nikkcr3141@gmail.com" target="_blank" rel="noreferrer" className="hover:text-gray-500">
+            <FaEnvelope/>
+          </a>
+          <a href="https://wa.me/919131310654" target="_blank" rel="noreferrer" className="hover:text-green-500">
+            <FaWhatsapp />
           </a>
         </div>
       </div>

@@ -4,15 +4,66 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 // ✅ Constants for dropdowns
-const COURSES = ["B.Tech", "B.Sc", "M.Tech", "Pharma", "BBA", "MBA", "BCom"];
+// Backend enums from Note model
+const COURSES = ["B.Tech", "M.Tech", "Pharma", "BBA", "MBA", "BCom"];
 
 const COURSE_BRANCHES = {
-  "B.Tech": ["CSE", "ECE", "ME", "CE"],
-  "M.Tech": ["CSE", "ECE", "ME", "CE"],
-  "Pharma": ["B.Pharm", "M.Pharm"],
-  "BBA": ["General"],
-  "MBA": ["General", "Pharma Management", "Finance", "Marketing"],
-  "BCom": ["General", "Honours"],
+  "B.Tech": [
+    "CSE",
+    "CSDS",  
+    "AI-ML",
+    "EX",      // Computer Science & Engineering
+    "ECE",         // Electronics & Communication
+    "ME",          // Mechanical Engineering
+    "CE",          // Civil Engineering
+    // "EEE",         // Electrical & Electronics
+    "IT",          // Information Technology
+    // "Chemical",    // Chemical Engineering
+    // "Biotech",     // Biotechnology
+    // "Aerospace",   // Aerospace Engineering
+    // "Production",  // Production/Industrial Engineering
+  ],
+
+  "M.Tech": [
+    "CSE", "ECE", "ME", "CE", "EEE", "IT", "Chemical", "Biotech", "Aerospace", "Production",
+  ],
+
+  "Pharma": [
+    "B.Pharm", 
+    "M.Pharm", 
+    "Pharma Management", 
+    "Clinical Research", 
+    "Pharmaceutical Chemistry"
+  ],
+
+  "BBA": [
+    "General", 
+    "Finance", 
+    "BA",
+    "Marketing", 
+    "Human Resource", 
+    "International Business"
+  ],
+
+  "MBA": [
+    "General", 
+    "Finance",
+    "BA",
+    "Marketing", 
+    "HR", 
+    "Operations", 
+    "Pharma Management", 
+    "International Business"
+  ],
+
+  "BCom": [
+    "General", 
+    "Honours", 
+    "Accounting", 
+    "Finance", 
+    "Taxation", 
+    "Banking & Insurance"
+  ],
 };
 
 const SEMESTERS = Array.from({ length: 8 }, (_, i) => i + 1);
