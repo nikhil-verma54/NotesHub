@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Chatbot from '../pages/Chatbot';
 
 export default function Navigation() {
   const [isAuth, setIsAuth] = useState(false);
   const navigate = useNavigate();
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("access_token") !== null) {
@@ -83,12 +85,12 @@ export default function Navigation() {
 
         {/* Buttons (except Ask Doubt) */}
         <div className="flex items-center space-x-4">
-          <Link
-            to="/UploadNotes"
+          <button
+            onClick={() => navigate(isAuth ? "/UploadNotes" : "/Auth")}
             className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
           >
             ⬆ Upload
-          </Link>
+          </button>
 
           
             {/* <Link
@@ -119,12 +121,22 @@ export default function Navigation() {
       </nav>
 
       {/* Ask Doubt Button - fixed bottom-right */}
-      <Link
-        to="/ask-doubt"
+      {/* <Link
+        to="/Chatbot"
         className="fixed bottom-6 right-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 pl-2 py-3 text-base font-semibold text-white shadow-lg animate-bounce hover:brightness-110 z-50"
       >
        <p>  Ask Doubt❓</p>  
-      </Link>
+      </Link> */}
+      <button
+  onClick={() => setChatOpen(true)}   // ✅ open chatbot
+  className="fixed bottom-6 right-6 inline-flex items-center gap-2 rounded-full 
+             bg-gradient-to-r from-blue-600 to-indigo-600 pl-2 py-3 text-base 
+             font-semibold text-white shadow-lg animate-bounce hover:brightness-110 z-50 hover:cursor-pointer "
+>
+  <p>Ask Doubt❓</p>
+</button>
+<Chatbot open={chatOpen} setOpen={setChatOpen} />
+
     </>
   );
 }

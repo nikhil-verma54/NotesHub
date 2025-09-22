@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'authentication',
     "notesupload",
     'oauth2_provider',
+    "chatbot",
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True

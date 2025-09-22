@@ -31,6 +31,7 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('api-auth/', include('drf_social_oauth2.urls',namespace='drf')),
     path('notes/', include('notesupload.urls')),  # ✅ add this
+    path("api/", include("chatbot.urls")),
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
