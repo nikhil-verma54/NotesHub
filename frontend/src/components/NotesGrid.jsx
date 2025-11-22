@@ -66,7 +66,7 @@ export default function NotesGrid({ notes, onView, isLoggedIn }) {
                 </a>
                 <button
                   onClick={() => handleDownload(n)}
-                  className="inline-flex items-center rounded-lg bg-gray-200 text-gray-900 px-3 py-2 text-sm hover:bg-gray-300"
+                  className="inline-flex items-center rounded-lg bg-gray-200 text-gray-900 px-3 py-2 text-sm hover:bg-gray-300 hover:cursor-pointer"
                 >
                   Download
                 </button>
