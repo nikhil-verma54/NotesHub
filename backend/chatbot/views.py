@@ -3,6 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import google.generativeai as genai
 import logging
+from dotenv import load_dotenv
+import os
+import google.generativeai as genai
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +64,8 @@ FAQS = [
         "Nikhil Verma is the creator of NotesHub and Genie. He built this platform to help students share and access study notes easily, creating a helpful learning community."
     ),
 ]
-
+# Load .env variables
+load_dotenv()
 def _normalize(text: str) -> str:
     return " ".join((text or "").lower().strip().split())
 
@@ -90,11 +94,10 @@ def try_answer_faq(user_message: str):
         )
     return None
 
-# Configure Gemini with your API key
 try:
-    genai.configure(api_key="AIzaSyCiY_AU_H_gZ79jfePCqIPfeJaSY6odwgc")  # Consider moving to env var
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    logger.info("Gemini configured successfully.")
 except Exception as e:
-    # Log but don't crash import
     logger.error("Failed to configure Google Generative AI: %s", e)
 
 @csrf_exempt

@@ -6,13 +6,26 @@ import './index.css'
 import './interceptors/axios';
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+// Get Google OAuth client ID from environment variables
+const googleClientId = import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID;
+
+if (!googleClientId) {
+  console.error('VITE_GOOGLE_OAUTH_CLIENT_ID is not set in environment variables');
+}
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="613405694389-7ipg9ms701pddafodtvtk0b7j7fpul0f.apps.googleusercontent.com">
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </GoogleOAuthProvider>
+    {googleClientId && (
+      <GoogleOAuthProvider clientId={googleClientId}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </GoogleOAuthProvider>
+    )}
+    {!googleClientId && (
+      <div style={{ padding: '20px', color: 'red' }}>
+        Error: Google OAuth Client ID is not configured. Please check your .env file.
+      </div>
+    )}
   </React.StrictMode>
 )
