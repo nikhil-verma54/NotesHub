@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+STATIC_ROOT = BASE_DIR/'staticfiles'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -165,7 +165,8 @@ SIMPLE_JWT = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+from dotenv import load_dotenv
+load_dotenv()
 # Google configuration
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613405694389-7ipg9ms701pddafodtvtk0b7j7fpul0f.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
