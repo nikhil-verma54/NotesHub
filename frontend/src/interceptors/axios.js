@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../components/AxiosInstance";
 
 
 let refreshing = false;
@@ -48,7 +48,7 @@ axios.interceptors.response.use(
 
         // Try to refresh the token
         const response = await axios.post(
-          "http://127.0.0.1:8000/token/refresh/",
+          "/token/refresh/",
           { refresh: refreshToken },
           { headers: { "Content-Type": "application/json" } }
         );

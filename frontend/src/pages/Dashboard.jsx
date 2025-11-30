@@ -1,6 +1,6 @@
 // Import the react JS packages
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../components/AxiosInstance";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
@@ -14,7 +14,7 @@ export default function Dashboard() {
     } else {
       (async () => {
         try {
-          const { data } = await axios.get("http://127.0.0.1:8000/auth/home/", {
+          const { data } = await axios.get("/auth/home/", {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -38,7 +38,7 @@ export default function Dashboard() {
   const handleLogout = async () => {
     try {
       const refreshToken = localStorage.getItem("refresh_token");
-      await axios.post("http://127.0.0.1:8000/auth/logout/", { refresh_token: refreshToken }, {
+      await axios.post("/auth/logout/", { refresh_token: refreshToken }, {
         headers: {
           "Content-Type": "application/json",
         },

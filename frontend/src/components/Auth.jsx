@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
+import axios from "./AxiosInstance";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true); // toggle login/signup
@@ -14,7 +14,7 @@ export default function Auth() {
     try {
       if (isLogin) {
         // 🔹 LOGIN
-        const { data } = await axios.post("http://127.0.0.1:8000/auth/login/", {
+        const { data } = await axios.post("/auth/login/", {
           email,
           password,
         });
@@ -27,7 +27,7 @@ export default function Auth() {
         window.location.href = "/Dashboard";
       } else {
         // 🔹 SIGNUP
-        await axios.post("http://127.0.0.1:8000/auth/signup/", {
+        await axios.post("/auth/signup/", {
           username,
           email,
           password,
@@ -105,7 +105,7 @@ export default function Auth() {
                 if (!id_token) throw new Error("No credential returned by Google");
 
                 const { data } = await axios.post(
-                  "http://127.0.0.1:8000/auth/google/",
+                  "/auth/google/",
                   { id_token },
                   { headers: { "Content-Type": "application/json" } }
                 );

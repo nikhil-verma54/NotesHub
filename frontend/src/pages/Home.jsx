@@ -1,9 +1,10 @@
 // Home.jsx
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import NotesGrid from "../components/NotesGrid";
 import FilterBar from "../components/FilterBar";
+import axios from "../components/AxiosInstance";
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
@@ -25,7 +26,7 @@ export default function Home() {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/notes/list/", {
+        const response = await axios.get("/notes/list/", {
           params: apiParams,
         });
         setNotes(response.data);

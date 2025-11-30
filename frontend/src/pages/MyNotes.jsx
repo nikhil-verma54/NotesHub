@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "../components/AxiosInstance";
 
 export default function MyNotes() {
   const [notes, setNotes] = useState([]);
@@ -20,7 +20,7 @@ export default function MyNotes() {
 
   const fetchNotes = async (token) => {
     try {
-      const { data } = await axios.get("http://localhost:8000/notes/my-notes/", {
+      const { data } = await axios.get("/notes/my-notes/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -46,7 +46,7 @@ export default function MyNotes() {
     if (!window.confirm("Are you sure you want to delete this note?")) return;
 
     try {
-      await axios.delete(`http://localhost:8000/notes/delete/${id}/`, {
+      await axios.delete(`/notes/delete/${id}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
