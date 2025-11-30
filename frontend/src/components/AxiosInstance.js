@@ -19,7 +19,9 @@ const AxiosInstance = axios.create({
         "Content-Type": "application/json",
         "Accept": "application/json"
     },
-    withCredentials: true // Important for cookies/sessions
+    withCredentials: true, // Important for cookies/sessions
+    xsrfCookieName: 'csrftoken',
+    xsrfHeaderName: 'X-CSRFToken',
 });
 
 // Add a request interceptor
