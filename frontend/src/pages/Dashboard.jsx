@@ -9,50 +9,29 @@ export default function Dashboard() {
 
   // Fetch user details on mount
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("access_token");
-      if (!token) {
-        window.location.href = "/Auth";
-        return;
-      }
-
-      try {
-        // First try to get user data from the backend
+    if (localStorage.getItem("access_token") === null) {
+      window.location.href = "/Auth";
+    } else {
+      (async () => {
         try {
           const { data } = await axios.get("/auth/home/", {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },
           });
-          // The backend returns username directly in the response
           setUser({
-            username: data.username || 'User',
-            email: data.email || 'No email',
-            isSuperUser: data.is_superuser || false,
+            username: data.username, // backend sends "username" as "message"
+            email: data.email,
+            isSuperUser: data.is_superuser,
           });
-        } catch (error) {
-          console.warn("Could not fetch user details:", error);
-          // If we can't get user details, still render the dashboard with minimal data
-          setUser({
-            username: 'User',
-            email: 'No email available',
-            isSuperUser: false,
-          });
-        }
-      } catch (e) {
-        console.error("Authentication error:", e);
-        // Only redirect to login if there's an actual auth error
-        if (e.response?.status === 401) {
+          setLoading(false);
+        } catch (e) {
+          console.log("Not authorized");
           window.location.href = "/Auth";
-          return;
         }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
+      })();
+    }
   }, []);
 
   // Handle logout
@@ -76,34 +55,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading your dashboard...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // If user data couldn't be loaded but we're not in a loading state
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md text-center">
-          <h2 className="text-2xl font-bold text-red-500 mb-4">Oops! Something went wrong</h2>
-          <p className="mb-4">We couldn't load your dashboard data.</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
-          >
-            Try Again
-          </button>
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-          >
-            Logout
-          </button>
-        </div>
+        <p className="text-gray-600 text-lg">Loading dashboard...</p>
       </div>
     );
   }
