@@ -1,7 +1,7 @@
 // UploadNotes.jsx
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "../components/AxiosInstance";
 
 // ✅ Constants for dropdowns
 // Backend enums from Note model
@@ -101,7 +101,7 @@ export default function UploadNotes() {
     formData.append("notes_file", file);
 
     try {
-      const response = await axios.post("http://localhost:8000/notes/upload/", formData, {
+      const response = await axios.post("/notes/upload/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

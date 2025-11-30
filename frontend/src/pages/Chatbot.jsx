@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import axios from "../components/AxiosInstance";
 
 function Chatbot({ open, setOpen }) {
   const [input, setInput] = useState("");
@@ -17,19 +18,17 @@ function Chatbot({ open, setOpen }) {
     setInput("");
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/chat/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMsg.user }),
+      const res = await axios.post("/api/chat/", {
+        message: userMsg.user,
       });
 
-      const data = await res.json();
+      const data = await res.data;
 
       setMessages((prev) => {
         const updated = [...prev];
         const lastIndex = updated.length - 1;
         const botText =
-          res.ok && data.reply
+          data.reply
             ? data.reply
             : data.error || "Something went wrong. Please try again.";
         updated[lastIndex] = { ...updated[lastIndex], bot: botText };
