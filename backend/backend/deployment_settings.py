@@ -23,47 +23,9 @@ MIDDLEWARE = [
 ]
 
 
-# CORS settings for production
 CORS_ALLOWED_ORIGINS = [
-    'https://noteshubb.onrender.com',
-    'https://noteshub-66uw.onrender.com'
-]
-
-# Required for credentials (cookies, authorization headers)
-CORS_ALLOW_CREDENTIALS = True
-
-# Required headers for preflight requests
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-    'x-csrftoken',
-]
-
-# CSRF settings
-CSRF_TRUSTED_ORIGINS = [
-    'https://noteshubb.onrender.com',
-    'https://noteshub-66uw.onrender.com'
-]
-
-# Session settings
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
-
-# Make sure your ALLOWED_HOSTS is set
-ALLOWED_HOSTS = [
-    'noteshub-66uw.onrender.com',
-    'noteshubb.onrender.com',
-    'localhost',
-    '127.0.0.1'
+    'https://noteshubb.onrender.com/'
+    'https://noteshub-66uw.onrender.com/'
 ]
 STORAGES = {
     "default":{
