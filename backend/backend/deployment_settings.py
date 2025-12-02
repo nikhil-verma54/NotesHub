@@ -24,7 +24,7 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    'https://noteshubb.onrender.com/'
+    'https://noteshubb.onrender.com/',
     'https://noteshub-66uw.onrender.com/'
 ]
 STORAGES = {

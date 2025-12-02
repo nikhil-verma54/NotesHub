@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     "chatbot",
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL =[
+    'https://noteshubb.onrender.com/',
+    'https://noteshub-66uw.onrender.com/']
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
