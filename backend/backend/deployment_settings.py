@@ -24,8 +24,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 # CORS SETTINGS
 CORS_ALLOWED_ORIGINS = [
-    'https://noteshubb.onrender.com',
-    'https://noteshub-66uw.onrender.com',
+    'https://noteshub-p8mr.onrender.com',
+    'https://noteshub-back.onrender.com',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
