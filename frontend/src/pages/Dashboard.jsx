@@ -17,29 +17,44 @@ export default function Dashboard() {
 
   // Fetch user details on mount
   useEffect(() => {
-    if (localStorage.getItem("access_token") === null) {
-      window.location.href = "/Auth";
-    } else {
-      (async () => {
-        try {
-          const { data } = await axios.get("/auth/home/", {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            },
-          });
-          setUser({
-            username: data.username, // backend sends "username" as "message"
-            email: data.email,
-            isSuperUser: data.is_superuser,
-          });
-          setLoading(false);
-        } catch (e) {
-          console.log("Not authorized");
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("access_token");
+      
+      if (!token) {
+        window.location.href = "/Auth";
+        return;
+      }
+
+      try {
+        const { data } = await axios.get("/auth/home/", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
+        setUser({
+          username: data.username,
+          email: data.email,
+          isSuperUser: data.is_superuser,
+        });
+      } catch (error) {
+        console.error("Authentication error:", error);
+        // Only redirect if it's an authentication error (401)
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
           window.location.href = "/Auth";
+          return;
         }
-      })();
-    }
+        // For other errors, we'll still show the page but log the error
+        console.error("Failed to load user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   // Handle logout
