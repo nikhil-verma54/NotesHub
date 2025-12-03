@@ -44,9 +44,50 @@ AxiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
+        // Don't retry if it's a login request to avoid infinite loops
+        if (originalRequest.url.includes('/auth/login/') || 
+            originalRequest.url.includes('/auth/google/')) {
+            return Promise.reject(error);
+        }
+
         // If error is 401 and we haven't tried to refresh yet
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
+            
+            try {
+                const refreshToken = localStorage.getItem('refresh_token');
+                if (!refreshToken) {
+                    // No refresh token, redirect to login
+                    window.location.href = '/Auth';
+                    return Promise.reject(error);
+                }
+
+                // Try to refresh the token
+                const response = await axios.post('https://noteshub-back.onrender.com/token/refresh/', {
+                    refresh: refreshToken
+                });
+                
+                const { access, refresh } = response.data;
+                
+                // Update tokens in storage
+                localStorage.setItem('access_token', access);
+                if (refresh) {
+                    localStorage.setItem('refresh_token', refresh);
+                }
+                
+                // Update the authorization header
+                originalRequest.headers.Authorization = `Bearer ${access}`;
+                
+                // Retry the original request
+                return AxiosInstance(originalRequest);
+            } catch (refreshError) {
+                console.error('Token refresh failed:', refreshError);
+                // If refresh fails, clear tokens and redirect to login
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+                window.location.href = '/Auth';
+                return Promise.reject(refreshError);
+            }
 
             try {
                 // Get refresh token

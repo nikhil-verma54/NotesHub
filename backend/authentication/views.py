@@ -28,16 +28,18 @@ class HomeView(APIView):
 
 
 class LogoutView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = []  # Remove authentication requirement for logout
 
     def post(self, request):
         try:
-            refresh_token = request.data["refresh_token"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+            refresh_token = request.data.get("refresh_token")
+            if refresh_token:
+                token = RefreshToken(refresh_token)
+                token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception:
-            return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            # Still return success even if token is invalid to ensure user can logout
+            return Response(status=status.HTTP_205_RESET_CONTENT)
 
 
 class SignupView(APIView):
