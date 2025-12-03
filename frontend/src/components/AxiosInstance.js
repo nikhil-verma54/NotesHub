@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-// Determine if we're in development mode
-const isDevelopment = import.meta.env.MODE === 'development'
-
 // Set base URL based on environment
-const myBaseUrl = isDevelopment 
-    ? import.meta.env.VITE_API_BASE_URL_LOCAL 
-    : import.meta.env.VITE_API_BASE_URL_DEPLOY
+let myBaseUrl = 'https://noteshub-back.onrender.com';
+
+// In development, you can still use localhost if needed
+if (import.meta.env.DEV) {
+  myBaseUrl = import.meta.env.VITE_API_BASE_URL_LOCAL || 'http://localhost:8000';
+}
 
 // Create axios instance
 const AxiosInstance = axios.create({
